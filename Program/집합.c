@@ -1,4 +1,4 @@
-// 이산수학 프로그래밍 과제 #1 : 구조체를 활용한 집합 연산 구현
+// 구조체를 활용한 집합 연산 구현
 #include <stdio.h>
 
 typedef struct Set
