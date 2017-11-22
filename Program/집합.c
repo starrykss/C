@@ -1,17 +1,10 @@
-/*
-* ÀÌ»ê¼öÇÐ ÇÁ·Î±×·¡¹Ö °úÁ¦ #1 : ±¸Á¶Ã¼¸¦ È°¿ëÇÑ ÁýÇÕ ¿¬»ê ±¸Çö
-* ÇÐ¹ø : 201620207
-* ÇÐ°ú : ÄÄÇ»ÅÍÁ¤º¸°øÇÐºÎ
-* ÀÌ¸§ : ±è»ó¼ø
-* Visual Studio ¹öÀü : 2017
-*/
-/*
+// ì´ì‚°ìˆ˜í•™ í”„ë¡œê·¸ëž˜ë° ê³¼ì œ #1 : êµ¬ì¡°ì²´ë¥¼ í™œìš©í•œ ì§‘í•© ì—°ì‚° êµ¬í˜„
 #include <stdio.h>
 
 typedef struct Set
 {
-	int num;	// ÁýÇÕ¿¡ Æ÷ÇÔµÈ ¿ø¼ÒÀÇ °³¼ö
-	int element[5];	// ÃÖ¼Ò 1°³ ÀÌ»ó ÃÖ´ë 5°³ÀÇ ¿ø¼Ò¸¦ ÀÔ·Â¹ÞÀ» ¹è¿­ ¼±¾ð
+	int num;	// ì§‘í•©ì— í¬í•¨ëœ ì›ì†Œì˜ ê°œìˆ˜
+	int element[5];	// ìµœì†Œ 1ê°œ ì´ìƒ ìµœëŒ€ 5ê°œì˜ ì›ì†Œë¥¼ ìž…ë ¥ë°›ì„ ë°°ì—´ ì„ ì–¸
 } Set;
 
 int main()
@@ -21,32 +14,32 @@ int main()
 	int tmp = 0, cntp = 0, cnt = 0, cntA = 1, cntB = 1, cntU = 0, flag = 0;
 	Set A, B;
 
-	// °ª ÃÊ±âÈ­
+	// ê°’ ì´ˆê¸°í™”
 	A.num = 0;
 	B.num = 0;
 
-	printf("  201620207 ±è»ó¼ø \n\n");		// ÇÐ¹ø, ÀÌ¸§ ¼³¸í
+	printf("  201620207 ê¹€ìƒìˆœ \n\n");		// í•™ë²ˆ, ì´ë¦„ ì„¤ëª…
 
-	// ÁýÇÕ A
-	printf("  A ÁýÇÕ¿¡ ÀÔ·ÂÇÒ ¿ø¼Ò °³¼ö : ");
+	// ì§‘í•© A
+	printf("  A ì§‘í•©ì— ìž…ë ¥í•  ì›ì†Œ ê°œìˆ˜ : ");
 	scanf("%d", &A.num);
-	if ((A.num > 5) || (A.num < 1)) {	// ÁýÇÕ A¿¡ Æ÷ÇÔµÈ ¿ø¼ÒÀÇ °³¼ö°¡ 5°³ ÃÊ°ú 1°³ ¹Ì¸¸ÀÏ °æ¿ì
-		return 0;		// ÇÁ·Î±×·¥ Á¾·á
+	if ((A.num > 5) || (A.num < 1)) {	// ì§‘í•© Aì— í¬í•¨ëœ ì›ì†Œì˜ ê°œìˆ˜ê°€ 5ê°œ ì´ˆê³¼ 1ê°œ ë¯¸ë§Œì¼ ê²½ìš°
+		return 0;		// í”„ë¡œê·¸ëž¨ ì¢…ë£Œ
 	}
 
-	// ÁýÇÕ B
-	printf("  B ÁýÇÕ¿¡ ÀÔ·ÂÇÒ ¿ø¼Ò °³¼ö : ");
+	// ì§‘í•© B
+	printf("  B ì§‘í•©ì— ìž…ë ¥í•  ì›ì†Œ ê°œìˆ˜ : ");
 	scanf("%d", &B.num);
-	if ((B.num > 5) || (B.num < 1)) {	// ÁýÇÕ B¿¡ Æ÷ÇÔµÈ ¿ø¼ÒÀÇ °³¼ö°¡ 5°³ ÃÊ°ú 1°³ ¹Ì¸¸ÀÏ °æ¿ì
-		return 0;		// ÇÁ·Î±×·¥ Á¾·á
+	if ((B.num > 5) || (B.num < 1)) {	// ì§‘í•© Bì— í¬í•¨ëœ ì›ì†Œì˜ ê°œìˆ˜ê°€ 5ê°œ ì´ˆê³¼ 1ê°œ ë¯¸ë§Œì¼ ê²½ìš°
+		return 0;		// í”„ë¡œê·¸ëž¨ ì¢…ë£Œ
 	}
 
 	printf("\n");
-	printf("  ÁýÇÕ A ¿ø¼Ò ÀÔ·Â : ");
+	printf("  ì§‘í•© A ì›ì†Œ ìž…ë ¥ : ");
 	for (int i = 0; i < A.num; i++) {
 		scanf("%d", &A.element[i]);
 	}
-	printf("  ÁýÇÕ B ¿ø¼Ò ÀÔ·Â : ");
+	printf("  ì§‘í•© B ì›ì†Œ ìž…ë ¥ : ");
 	for (int i = 0; i < B.num; i++) {
 		scanf("%d", &B.element[i]);
 	}
@@ -56,13 +49,13 @@ int main()
 	printf("\n");
 
 
-	// ÁýÇÕ ¿ø¼Ò Á¤¸® ////////////////////////////////////////////////////////
+	// ì§‘í•© ì›ì†Œ ì •ë¦¬ ////////////////////////////////////////////////////////
 
-	//<---------- ÁýÇÕ A ----------->//
-	// 1. ¹è¿­ Á¤·Ä //
+	//<---------- ì§‘í•© A ----------->//
+	// 1. ë°°ì—´ ì •ë ¬ //
 	for (int s = 0; s < A.num - 1; s++) {
 		for (int t = s + 1; t < A.num; t++) {
-			if (A.element[t] < A.element[s]) {     // ¿À¸§Â÷¼ø Á¤·Ä
+			if (A.element[t] < A.element[s]) {     // ì˜¤ë¦„ì°¨ìˆœ ì •ë ¬
 				tmp = A.element[t];
 				A.element[t] = A.element[s];
 				A.element[s] = tmp;
@@ -70,7 +63,7 @@ int main()
 		}
 	}
 
-	// 2. Áßº¹µÈ ¼ö Ã£±â //
+	// 2. ì¤‘ë³µëœ ìˆ˜ ì°¾ê¸° //
 	a[0] = A.element[0];
 
 	for (int i = 1; i < A.num; i++) {
@@ -80,16 +73,16 @@ int main()
 		}		
 	}
 
-	//  3. ´Ù½Ã º¹»çÇØ¼­ ±¸Á¶Ã¼¿¡ ³Ö±â //
+	//  3. ë‹¤ì‹œ ë³µì‚¬í•´ì„œ êµ¬ì¡°ì²´ì— ë„£ê¸° //
 	for (int i = 0; i < cntA; i++) {
 		A.element[i] = a[i];
 	}
 
-	//<---------- ÁýÇÕ B ----------->//
-	// 1. ¹è¿­ Á¤·Ä //
+	//<---------- ì§‘í•© B ----------->//
+	// 1. ë°°ì—´ ì •ë ¬ //
 	for (int s = 0; s < B.num - 1; s++) {
 		for (int t = s + 1; t < B.num; t++) {
-			if (B.element[t] < B.element[s]) {     // ¿À¸§Â÷¼ø Á¤·Ä
+			if (B.element[t] < B.element[s]) {     // ì˜¤ë¦„ì°¨ìˆœ ì •ë ¬
 				tmp = B.element[t];
 				B.element[t] = B.element[s];
 				B.element[s] = tmp;
@@ -97,7 +90,7 @@ int main()
 		}
 	}
 
-	// 2. Áßº¹µÈ ¼ö Ã£±â //
+	// 2. ì¤‘ë³µëœ ìˆ˜ ì°¾ê¸° //
 	b[0] = B.element[0];
 
 	for (int i = 1; i < B.num; i++) {
@@ -107,7 +100,7 @@ int main()
 		}
 	}
 
-	// 3. ´Ù½Ã º¹»çÇØ¼­ ±¸Á¶Ã¼¿¡ ³Ö±â //
+	// 3. ë‹¤ì‹œ ë³µì‚¬í•´ì„œ êµ¬ì¡°ì²´ì— ë„£ê¸° //
 	for (int i = 0; i < cntB; i++) {
 		B.element[i] = b[i];
 	}
@@ -115,23 +108,23 @@ int main()
 
 
 
-	// ÁýÇÕ A¿¡ Æ÷ÇÔµÈ ¿ø¼Ò Ãâ·Â
-	printf("  ÁýÇÕ A : [");
-	for (int i = 0; i < cntA; i++) {	// cntA ±îÁö
+	// ì§‘í•© Aì— í¬í•¨ëœ ì›ì†Œ ì¶œë ¥
+	printf("  ì§‘í•© A : [");
+	for (int i = 0; i < cntA; i++) {	// cntA ê¹Œì§€
 		printf("%d ", A.element[i]);
 	}
 	printf("\b] \n");
 
-	// ÁýÇÕ B¿¡ Æ÷ÇÔµÈ ¿ø¼Ò Ãâ·Â
-	printf("  ÁýÇÕ B : [");
-	for (int i = 0; i < cntB; i++) {	// cntB ±îÁö
+	// ì§‘í•© Bì— í¬í•¨ëœ ì›ì†Œ ì¶œë ¥
+	printf("  ì§‘í•© B : [");
+	for (int i = 0; i < cntB; i++) {	// cntB ê¹Œì§€
 		printf("%d ", B.element[i]);
 	}
 	printf("\b] \n");
 
 	printf("\n \n");
-	printf("  A ¡û B : [");
-	// ±³ÁýÇÕ ³»¿ë Ãß°¡
+	printf("  A âˆ© B : [");
+	// êµì§‘í•© ë‚´ìš© ì¶”ê°€
 	flag = 0;
 	cntp = 0;
 
@@ -152,20 +145,20 @@ int main()
 	}
 	//
 
-	// °ýÈ£ ¾ÈÀÇ ³»¿ëÀÌ ºñ¾úÀ» °æ¿ì °ýÈ£¸¦ Á¤»óÀûÀ¸·Î Ãâ·ÂÇÏ±â À§ÇÔ
-	if (cntp == 0) {		// °ýÈ£ ¾ÈÀÇ ³»¿ëÀÌ ºñ¾úÀ» °æ¿ì
-		printf("] \n");	// ']' Ãâ·Â
+	// ê´„í˜¸ ì•ˆì˜ ë‚´ìš©ì´ ë¹„ì—ˆì„ ê²½ìš° ê´„í˜¸ë¥¼ ì •ìƒì ìœ¼ë¡œ ì¶œë ¥í•˜ê¸° ìœ„í•¨
+	if (cntp == 0) {		// ê´„í˜¸ ì•ˆì˜ ë‚´ìš©ì´ ë¹„ì—ˆì„ ê²½ìš°
+		printf("] \n");	// ']' ì¶œë ¥
 	}
-	else {							// °ýÈ£ ¾ÈÀÇ ³»¿ëÀÌ ºñ¾î ÀÖÁö ¾ÊÀ» °æ¿ì
-		printf("\b] \n");		// '\b]' Ãâ·Â (\b : ¾Õ ±ÛÀÚ »èÁ¦) => °ø¹é »èÁ¦
+	else {							// ê´„í˜¸ ì•ˆì˜ ë‚´ìš©ì´ ë¹„ì–´ ìžˆì§€ ì•Šì„ ê²½ìš°
+		printf("\b] \n");		// '\b]' ì¶œë ¥ (\b : ì•ž ê¸€ìž ì‚­ì œ) => ê³µë°± ì‚­ì œ
 	}
 
-	printf("  A ¡ú B : [");
-	// ÇÕÁýÇÕ ³»¿ë Ãß°¡
+	printf("  A âˆª B : [");
+	// í•©ì§‘í•© ë‚´ìš© ì¶”ê°€
 	flag = 0;
 
 	for (int i = 0; i < cntA; i++) {
-		uni[flag] = A.element[i];		// ÁýÇÕ A¿¡ ÀÖ´Â ¿ø¼ÒµéÀ» uni ¹è¿­¿¡ ´ëÀÔ.
+		uni[flag] = A.element[i];		// ì§‘í•© Aì— ìžˆëŠ” ì›ì†Œë“¤ì„ uni ë°°ì—´ì— ëŒ€ìž….
 		flag++;
 	}
 
@@ -174,10 +167,10 @@ int main()
 		flag++;
 	}
 
-	// 1. ¹è¿­ Á¤·Ä //
+	// 1. ë°°ì—´ ì •ë ¬ //
 	for (int s = 0; s < flag - 1; s++) {
 		for (int t = s + 1; t < flag; t++) {
-			if (uni[t] <uni[s]) {     // ¿À¸§Â÷¼ø Á¤·Ä
+			if (uni[t] <uni[s]) {     // ì˜¤ë¦„ì°¨ìˆœ ì •ë ¬
 				tmp = uni[t];
 				uni[t] = uni[s];
 				uni[s] = tmp;
@@ -185,7 +178,7 @@ int main()
 		}
 	}
 
-	// 2. Áßº¹µÈ ¼ö Ã£±â //
+	// 2. ì¤‘ë³µëœ ìˆ˜ ì°¾ê¸° //
 	c[0] = uni[0];
 
 	for (int i = 0; i < flag; i++) {
@@ -195,12 +188,12 @@ int main()
 		}
 	}
 
-	// 3. ´Ù½Ã º¹»çÇØ¼­ ±¸Á¶Ã¼¿¡ ³Ö±â
+	// 3. ë‹¤ì‹œ ë³µì‚¬í•´ì„œ êµ¬ì¡°ì²´ì— ë„£ê¸°
 	for (int i = 0; i < cntU; i++) {
 		uni[i] = c[i];
 	}
 
-	// 4. Ãâ·ÂÇÏ±â
+	// 4. ì¶œë ¥í•˜ê¸°
 	for (int i = 0; i < cntU; i++) {
 		printf("%d ", uni[i]);
 	}
@@ -210,7 +203,7 @@ int main()
 	printf("\b] \n");
 
 	printf("  A - B : [");
-	// A-B ³»¿ë Ãß°¡
+	// A-B ë‚´ìš© ì¶”ê°€
 	flag = 0;
 	cntp = 0;
 
@@ -230,16 +223,16 @@ int main()
 		}
 	}
 	//
-	// °ýÈ£ ¾ÈÀÇ ³»¿ëÀÌ ºñ¾úÀ» °æ¿ì °ýÈ£¸¦ Á¤»óÀûÀ¸·Î Ãâ·ÂÇÏ±â À§ÇÔ
-	if (cntp == 0) {		// °ýÈ£ ¾ÈÀÇ ³»¿ëÀÌ ºñ¾úÀ» °æ¿ì
-		printf("] \n");	// ']' Ãâ·Â
+	// ê´„í˜¸ ì•ˆì˜ ë‚´ìš©ì´ ë¹„ì—ˆì„ ê²½ìš° ê´„í˜¸ë¥¼ ì •ìƒì ìœ¼ë¡œ ì¶œë ¥í•˜ê¸° ìœ„í•¨
+	if (cntp == 0) {		// ê´„í˜¸ ì•ˆì˜ ë‚´ìš©ì´ ë¹„ì—ˆì„ ê²½ìš°
+		printf("] \n");	// ']' ì¶œë ¥
 	}
-	else {							// °ýÈ£ ¾ÈÀÇ ³»¿ëÀÌ ºñ¾î ÀÖÁö ¾ÊÀ» °æ¿ì
-		printf("\b] \n");		// '\b]' Ãâ·Â (\b : ¾Õ ±ÛÀÚ »èÁ¦) => °ø¹é »èÁ¦
+	else {							// ê´„í˜¸ ì•ˆì˜ ë‚´ìš©ì´ ë¹„ì–´ ìžˆì§€ ì•Šì„ ê²½ìš°
+		printf("\b] \n");		// '\b]' ì¶œë ¥ (\b : ì•ž ê¸€ìž ì‚­ì œ) => ê³µë°± ì‚­ì œ
 	}
 
 	printf("  B - A : [");
-	// B-A ³»¿ë Ãß°¡
+	// B-A ë‚´ìš© ì¶”ê°€
 
 	flag = 0;
 	cntp = 0;
@@ -261,14 +254,13 @@ int main()
 	}
 
 	//
-	// °ýÈ£ ¾ÈÀÇ ³»¿ëÀÌ ºñ¾úÀ» °æ¿ì °ýÈ£¸¦ Á¤»óÀûÀ¸·Î Ãâ·ÂÇÏ±â À§ÇÔ
-	if (cntp == 0) {		// °ýÈ£ ¾ÈÀÇ ³»¿ëÀÌ ºñ¾úÀ» °æ¿ì
-		printf("] \n \n");	// ']' Ãâ·Â
+	// ê´„í˜¸ ì•ˆì˜ ë‚´ìš©ì´ ë¹„ì—ˆì„ ê²½ìš° ê´„í˜¸ë¥¼ ì •ìƒì ìœ¼ë¡œ ì¶œë ¥í•˜ê¸° ìœ„í•¨
+	if (cntp == 0) {		// ê´„í˜¸ ì•ˆì˜ ë‚´ìš©ì´ ë¹„ì—ˆì„ ê²½ìš°
+		printf("] \n \n");	// ']' ì¶œë ¥
 	}
-	else {							// °ýÈ£ ¾ÈÀÇ ³»¿ëÀÌ ºñ¾î ÀÖÁö ¾ÊÀ» °æ¿ì
-		printf("\b] \n \n");		// '\b]' Ãâ·Â (\b : ¾Õ ±ÛÀÚ »èÁ¦) => °ø¹é »èÁ¦
+	else {				// ê´„í˜¸ ì•ˆì˜ ë‚´ìš©ì´ ë¹„ì–´ ìžˆì§€ ì•Šì„ ê²½ìš°
+		printf("\b] \n \n");	// '\b]' ì¶œë ¥ (\b : ì•ž ê¸€ìž ì‚­ì œ) => ê³µë°± ì‚­ì œ
 	}
 
 	return 0;
 }
-*/
