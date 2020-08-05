@@ -1,193 +1,177 @@
-/* 
- * Bellman Ford Program (with Adjacent Matrix)
- * Author : starrykss
- * Language : C
- */
-
 #include <stdio.h>
-#include <stdlib.h>
-
-#define TRUE 1
-#define FALSE 0
-#define MAX_VTXS 100
-#define INF 9999
-#define LIMITS 9000
-
-void error(char str[]) {
-    printf("%s\n", str);
-    exit(1);
-}
-
-typedef char VtxData;
-typedef struct {
-    int adj_mat[MAX_VTXS][MAX_VTXS];
-    int vsize;
-    int esize;
-} GraphType;
-
+#include <stdlib.h> // malloc
+#include <limits.h> // INT_MAX
+ 
+// 간선 구조체
+// src = 시작점, dst = 도착점, weight = 가중치
 typedef struct {
     int src;
-    int dest;
-    int weight;
+    int dst;
+    int weight; 
 } EdgeType;
-
-VtxData vdata[MAX_VTXS];
-EdgeType edge[MAX_VTXS];
-int idx = 0;
-
-int is_empty_graph(GraphType *g) { return (g->vsize == 0); }
-int is_full_graph(GraphType *g) { return (g->vsize >= MAX_VTXS); }
-void init_graph(GraphType *g) {
-	int i, j;
-	g->vsize = 0;
-    g->esize = 0;
-	for (i = 0; i < MAX_VTXS; i++) {
-		for (j = 0; j < MAX_VTXS; j++) {
-			g->adj_mat[i][j] = 0;
-        }
-    }
+ 
+// 그래프 구조체
+// V :: 정점의 수 E :: 간선의 수
+// edge :: 포인터 형식으로 서로 다른 정점을 연결하기 위해 존재
+typedef struct {
+    int V;
+    int E;
+    EdgeType* edge;
+} GraphType;
+ 
+// V와 E를 통해 정점과 간선의 수를 가진 그래프를 생성한다.
+GraphType *createGraph(int V, int E) {
+    GraphType* graph = (GraphType*) malloc(sizeof(GraphType));
+ 
+    graph->V = V;
+    graph->E = E;
+ 
+    graph->edge = (EdgeType*) malloc(graph->E * sizeof(EdgeType));
+ 
+    return graph;
 }
-
-void insert_vertex(GraphType *g, VtxData name) {
-	if (is_full_graph(g))
-		error("Error: 그래프 정점의 개수 초과\n");
-	else
-		vdata[g->vsize++] = name;
-}
-
-void setting_edge(GraphType *g) {
-    for (int i = 0; i < g->vsize; i++) {
-        for (int j = 0; j < g->vsize; j++) {
-            edge[idx].src = i;
-            edge[idx].dest = j;
-            edge[idx].weight = g->adj_mat[i][j];
-            if (g->adj_mat[i][j] != 0 && g->adj_mat[i][j] != INF) {
-                g->esize++;
-            }
-        idx++;
-        }
-    }
-    g->esize;
-}
-
-void print_graph(GraphType *g, char* msg) {
-	int i, j;
-	printf("%s", msg);
-	printf("%d\n", g->vsize);
-	for (i = 0; i < g->vsize; i++) {
-		printf("%c  ", vdata[i]);
-		for (j = 0; j < g->vsize; j++)
-			printf(" %3d", g->adj_mat[i][j]);
-		printf("\n");
-	}
-}
-
-void load_wgraph(GraphType *g, char *filename) {
-    int i, j, val, n;
-    char str[80];
-    FILE *fp = fopen(filename, "r");
-    if (fp != NULL) {
-        init_graph(g);
-        fscanf(fp, "%d", &n);
-        for (i = 0; i < n; i++) {
-            fscanf(fp, "%s", str);
-            insert_vertex(g, str[0]);
-            for (j = 0; j < n; j++) {
-                fscanf(fp, "%d", &val);
-                if (i != j && val == 0) g->adj_mat[i][j] = INF;
-                else g->adj_mat[i][j] = val;
-            }
-        }
-        fclose(fp);
-    }
-    setting_edge(g);
-}
-
-void print_wgraph(GraphType *g, char *msg) {
-    int i, j, val;
-
-    printf("%s%d\n", msg, g->vsize);
-    for (i = 0; i < g->vsize; i++) {
-        printf("%c ", vdata[i]);
-        for (j = 0; j < g->vsize; j++) {
-            val = g->adj_mat[i][j];
-            if (i == j) printf("  0 ");
-            else if (val >= INF) printf("  - ");
-            else printf("%3d ", val);
-        }
-        printf("\n");
-    }
-}
-
+ 
 // 결과를 출력하기 위한 함수
-void printArr(int **dist, int n, int src) {
-    int num = 0;
-
-    for (int i = 1; i < n; i++) {
-        printf("(distance :%2d) =>", ++num);
-        for (int j = 0; j < n; j++) {
-            if (dist[i][j] > LIMITS) {
-                printf("%3s ", "INF");
-            }
-            else {
-                printf("%3d ", dist[i][j]);
-            }
-        }
-        printf("\n");
-    }
-
-    // 최단 경로 출력
-    printf("# Shortest Path(start : %c)\n", vdata[src]);
-    for (int i = 0; i < n; i++) {
-        printf("%c - %c : ", vdata[src], vdata[i]);
-        if (dist[n - 1][i] > LIMITS) printf("INF\n");
-        else printf("%d\n",  dist[n - 1][i]);
-    }
+void printArr(int dist[], int n) {
+    printf("Vertex   Distance from Source\n");
+    for (int i = 0; i < n; ++i)
+        dist[i] == INT_MAX ? printf("%d \t\tINF\n",i) : printf("%d \t\t %d\n", i, dist[i]);
 }
-
-void BellmanFord(GraphType *g, int src) {
-    int V = g->vsize;
-    int E = g->esize;
-
-    // 2차원 dist 배열 동적 할당
-    int **dist = (int**)malloc(sizeof(int*) * V);
-    for (int i = 0; i < V; i++) {
-        dist[i] = (int*)malloc(sizeof(int*) * V);
-    }
-
-    // 모든 최단 거리를 무한대로 지정
-    for (int i = 0; i < V; i++) {
-        for (int j = 0; j < V; j++) {
-            dist[i][j] = INF;
-        }
-    }
-    // 시작점(src)만 0으로 초기화
-    for (int i = 0; i < V; i++) {
-        dist[i][src] = 0;
-    }
-
+ 
+// src에서 모든 다른 정점까지의 최단 거리를 찾아주는 BellmanFord 함수이다.
+// 음의 가중치 까지 적용이 가능하다.
+void BellmanFord(GraphType *graph, int src) {
+    int V = graph->V;
+    int E = graph->E;
+    int *dist = (int*)malloc(sizeof(int)*V); // int dist[V+1]과 같다.
+ 
+    // 모든 최단 거리를 무한대로 지정해주고, 시작점(src)만 0으로 초기화 한다.
+    for (int i = 0; i < V; i++)
+        dist[i] = INT_MAX;
+    dist[src] = 0;
+ 
     // 벨만 포드 알고리즘
-    for (int i = 1; i < V; i++) {
-        for (int j = 0; j < V; j++) {
-            dist[i][j] = dist[i - 1][j];
-            for (int k = 0; k < V; k++) {
-                if (dist[i][j] > dist[i - 1][k] + g->adj_mat[k][j]) {
-                    dist[i][j] = dist[i - 1][k] + g->adj_mat[k][j];
-                }
-            }
-
+    for (int i = 1; i <= V - 1; i++) {
+        for (int j = 0; j < E; j++) {
+            int u = graph->edge[j].src;
+            int v = graph->edge[j].dst;
+            int weight = graph->edge[j].weight;
+            // 정점u가(시작점이) 무한대가 아니고, 
+            // 시작점까지의 최단 거리 + 가중치가 도착점의 가중치 
+            // 보다 작을 때 업데이트 해준다.
+            if (dist[u] != INT_MAX && dist[u] + weight < dist[v])
+                dist[v] = dist[u] + weight;
         }
     }
-    printArr(dist, V, src);
-
+ 
+    // 음의 가중치 때문에 무한히 최단 경로가 작아지는 것이 있다면
+    // 탐색하여 알려준다.
+    for (int i = 0; i < E; i++)  {
+        int u = graph->edge[i].src;
+        int v = graph->edge[i].dst;
+        int weight = graph->edge[i].weight;
+        // if문에서 현재위치 최단거리 + 가중치가 계속해서 더 작아질 경우
+        // 음의 사이클이 있다고 판단한다.
+        if (dist[u] != INT_MAX && dist[u] + weight < dist[v])
+            printf("Graph contains negative weight cycle\n");
+    }
+ 
+    printArr(dist, V);
+ 
     return;
 }
+ 
+ 
+int main() {
+    int V = 5;  // 정점의 수
+    int E = 9;  // 간선의 수
+    GraphType *graph = createGraph(V, E);
+ 
+    // 그래프 정보를 입력해준다.
+    graph->edge[0].src = 0; // 0에서 
+    graph->edge[0].dst = 2; // 2로 가는 간선의
+    graph->edge[0].weight = 1; // 가중치는 1로 정한다.
+ 
+    graph->edge[1].src = 0;
+    graph->edge[1].dst = 3;
+    graph->edge[1].weight = 5;
+ 
+    graph->edge[2].src = 1;
+    graph->edge[2].dst = 2;
+    graph->edge[2].weight = -2;
+ 
+    graph->edge[3].src = 2;
+    graph->edge[3].dst = 1;
+    graph->edge[3].weight = 4;
+ 
+    graph->edge[4].src = 2;
+    graph->edge[4].dst = 3;
+    graph->edge[4].weight = 4;
+ 
+    graph->edge[5].src = 3;
+    graph->edge[5].dst = 0;
+    graph->edge[5].weight = -1;
+ 
+    graph->edge[6].src = 3;
+    graph->edge[6].dst = 1;
+    graph->edge[6].weight = 3;
+ 
+    graph->edge[7].src = 4;
+    graph->edge[7].dst = 0;
+    graph->edge[7].weight = 1;
+ 
+    graph->edge[8].src = 4;
+    graph->edge[8].dst = 2;
+    graph->edge[8].weight = -1;
+ 
+    BellmanFord(graph, 0);
 
-void main() {
-    GraphType g;
-
-    load_wgraph(&g, "wgraph_negative.txt");
-    print_wgraph(&g, "GRAPH\n");
-    printf("Bellman Ford's Shortest Path Algorithm\n");
-    BellmanFord(&g, 0);
+    return 0;
+    
+    /*
+    int V = 5;  // 정점의 수
+    int E = 9;  // 간선의 수
+    GraphType* graph = createGraph(V, E);
+ 
+    // 그래프 정보를 입력해준다.
+    graph->edge[0].src = 0; // 0에서 
+    graph->edge[0].dst = 1; // 1로 가는 간선의
+    graph->edge[0].weight = -2; // 가중치는 -2로 정한다.
+ 
+    graph->edge[1].src = 0;
+    graph->edge[1].dst = 2;
+    graph->edge[1].weight = 5;
+ 
+    graph->edge[2].src = 0;
+    graph->edge[2].dst = 3;
+    graph->edge[2].weight = 3;
+ 
+    graph->edge[3].src = 1;
+    graph->edge[3].dst = 0;
+    graph->edge[3].weight = -2;
+ 
+    graph->edge[4].src = 1;
+    graph->edge[4].dst = 4;
+    graph->edge[4].weight = 4;
+ 
+    graph->edge[5].src = 3;
+    graph->edge[5].dst = 1;
+    graph->edge[5].weight = 3;
+ 
+    graph->edge[6].src = 4;
+    graph->edge[6].dst = 2;
+    graph->edge[6].weight = 1;
+ 
+    graph->edge[7].src = 4;
+    graph->edge[7].dst = 0;
+    graph->edge[7].weight = 1;
+ 
+    graph->edge[8].src = 4;
+    graph->edge[8].dst = 3;
+    graph->edge[8].weight = -2;
+ 
+    BellmanFord(graph, 0);
+ 
+    return 0;
+    */
 }
