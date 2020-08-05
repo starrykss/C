@@ -1,73 +1,62 @@
-// Merge Sort
 #include <stdio.h>
 
-#define N 8
+#define MAX_SIZE 100
 
-int temp[N];  // 정렬된 데이터 저장 배열
-
-// 병합 정렬 함수
-void merge(int ary[], int m, int middle, int n) {
-    int i, j, k, t;
-
-    i = m;  // 첫번째 배열
-    j = middle + 1; // 중간의 뒤 배열
-    k = m; // 첫번째 배열
-
-    while (i <= middle && j <= n) {
-        if (ary[i] <= ary[j]) { // 앞의 값이 작을 때 비교
-            temp[k] = ary[i];  // 정렬된 배열 저장
-            i++;
-        }
-        else { // 앞의 값이 클 때 비교
-            temp[k] = ary[j];
-            j++;    // 다음 변수 비교를 위한 증가
-        }
-        k++;  // 현재 위치를 알고자 하는 증가
+void printArray(int list[], int end, char *content) {
+    printf("%s = ", content);
+    for (int i = 0; i < end; i++) {
+        printf("%2d ", list[i]);
     }
+    printf("\n");
+}
+
+void printStep(int list[], int num, int begin) {
+    printf("  Step %d =", begin);
+    for (int i = 0; i < num; i++) {
+        printf("%2d ", list[i]);
+    }
+    printf("\n");
+}
+
+static void merge(int list[], int left, int mid, int right) {
+    int i, j, k = left, l;          // k : 정렬 될 리스트에 대한 인덱스
+    static int sorted[MAX_SIZE];    // 병합된 리스트 저장을 위한 임시 배열
     
-    if (i > middle) {
-        for (t = j; t <= n; t++, k++) {
-            temp[k] = ary[t];
+    // 분할 정렬된 list의 병합
+    for (i = left, j = mid + 1; i <= mid && j <= right;) {
+        sorted[k++] = (list[i] <= list[j]) ? list[i++] : list[j++];
+    }
+    // 한쪽에 남아 있는 레코드의 일괄 복사
+    if (i > mid) {
+        for (l = j; l <= right; l++, k++) {
+            sorted[k] = list[l];
         }
     }
     else {
-        for (t = i; t <= middle; t++, k++) {
-            temp[k] = ary[t];
+        for (l = i; l <= mid; l++, k++) {
+            sorted[k] = list[l];
         }
     }
 
-    for (t = m; t <= n; t++) {
-        ary[t] = temp[t];
+    // 배열 sorted[]의 리스트를 배열 list[]로 다시 복사
+    for (l = left; l <= right; l++) {
+        list[l] = sorted[l];
     }
 }
 
-// 분할 함수
-void MergeSort(int ary[], int m, int n) {
-    int middle;
-    if (m < n) {
-        middle = (m + n) / 2;             // 가운데 배열 설정
-        MergeSort(ary, m, middle);        // 병합 정렬 함수 호출(왼쪽)   
-        MergeSort(ary, middle + 1, n);    // 병합 정렬 함수 호출(오른쪽)    
-        merge(ary, m, middle, n);         // 오른쪽 정렬을 위한 함수 호출
+// 병합 정렬 알고리즘을 이용해 int 배열을 오름차순으로 정렬하는 함수
+void merge_sort(int list[], int left, int right) {
+    if (left < right) {
+        int mid = (left + right) / 2;        // 리스트의 균등 분할
+        merge_sort(list, left, mid);         // 부분 리스트 정렬
+        merge_sort(list, mid + 1, right);    // 부분 리스트 정렬
+        merge(list, left, mid, right);       // 병합
     }
 }
 
 void main() {
-    int data[N] = {69, 10, 30, 2, 16, 8, 31, 22};
-    int temp;
-
-    printf("정렬 전 : ");
-    for (int i = 0; i < N; i++) {
-        printf("%d ", data[i]);
-    }
-    printf("\n");
-
-    // 병합 정렬 알고리즘
-    MergeSort(data, 0, N - 1);
-
-    printf("정렬 후 : ");
-    for (int i = 0; i < N; i++) {
-        printf("%d ", data[i]);
-    }
-    printf("\n");
+    int list[8] = {71, 49, 92, 55, 38, 82, 72, 53};
+    printArray(list, 8, "Original ");
+    merge_sort(list, 0, 7);
+    printArray(list, 8, "MergeSort");
 }

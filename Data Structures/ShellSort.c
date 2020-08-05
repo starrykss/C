@@ -1,57 +1,47 @@
-// Shell Sort
 #include <stdio.h>
 
-#define N 8
+void printStep(int list[], int num, int begin) {
+    printf("  Step %d =", begin);
+    for (int i = 0; i < num; i++) {
+        printf("%2d ", list[i]);
+    }
+    printf("\n");
+}
 
-// 데이터를 비교 정렬하는 함수
-void intervalSort(int ary[], int begin, int end, int interval) {
-    int i, j, item;             
-    for(i = begin + interval; i <= end; i = i + interval){     
-            item = ary[i];            
-            for(j = i - interval; j >= begin && item < ary[j]; j = j - interval) {
-                ary[j + interval] = ary[j]; //앞의 원소가 큰 경우
-            }
-            ary[j + interval] = item; //앞의 원소가 작은 경우
+void printArray(int list[], int end, char *content) {
+    printf("%s = ", content);
+    for (int i = 0; i < end; i++) {
+        printf("%2d ", list[i]);
+    }
+    printf("\n");
+}
+
+static void sortGapInsertion(int list[], int first, int last, int gap) {
+    int i, j, key;
+    for (i = first + gap; i <= last; i = i + gap) {
+        key = list[i];
+        for (j = i - gap; j >= first && key < list[j]; j = j - gap) {
+            list[j + gap] = list[j];
+        }
+        list[j + gap] = key;
     }
 }
 
-// 쉘 정렬 함수
-void ShellSort(int ary[], int size) {
-        int i, t, interval;
-      
-        printf("\n");
-        interval = size / 2;
-        while (interval >= 1) {
-                for (i = 0; i < interval; i++) {
-                    intervalSort(ary, i, size - 1, interval); 
-                }
-
-                printf("interval = %d  >> ", interval);
-                for(t = 0; t < size; t++) {
-                    printf("%d ", ary[t]);
-                }
-                printf("\n");
-
-                interval = interval / 2;
+void shell_sort(int list[], int n) {
+    int i, gap, count = 0;
+    for (gap = n / 2; gap > 0; gap = gap / 2) {
+        if ((gap % 2) == 0) gap++;
+        printf("gap : %d   ", gap);
+        for (i = 0; i < gap; i++) {
+            sortGapInsertion(list, i, n - 1, gap);
         }
-        printf("\n");
+        printStep(list, n, ++count);
+    }
 }
 
 void main() {
-    int data[N] = {69, 10, 30, 2, 16, 8, 31, 22};
-
-    printf("정렬 전 : ");
-    for (int i = 0; i < N; i++) {
-        printf("%d ", data[i]);
-    }
-    printf("\n");
-
-    // 쉘 정렬 알고리즘
-    ShellSort(data, N);
-
-    printf("정렬 후 : ");
-    for (int i = 0; i < N; i++) {
-        printf("%d ", data[i]);
-    }
-    printf("\n");
+    int list[8] = {71, 49, 92, 55, 38, 82, 72, 53};
+    printArray(list, 8, "Original");
+    shell_sort(list, 8);
+    printArray(list, 8, "Shell");
 }

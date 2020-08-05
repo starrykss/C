@@ -1,38 +1,40 @@
-// Selection Sort
 #include <stdio.h>
 
-#define N 8
+#define SWAP(x, y, t) ((t)=(x), (x)=(y), (y)=(t))
 
-void SelectionSort(int ary[], int size) {
-    int temp;
+void printStep(int list[], int num, int begin) {
+    printf("  Step %d =", begin);
+    for (int i = 0; i < num; i++) {
+        printf("%2d", list[i]);
+    }
+    printf("\n");
+}
 
-    for (int i = 0; i < size - 1; i++) {
-        for (int j = i + 1; j < size; j++) {
-            if (ary[i] > ary[j]) {
-                temp = ary[i];
-                ary[i] = ary[j];
-                ary[j] = temp;
+void printArray(int list[], int end, char *content) {
+    printf("%s = ", content);
+    for (int i = 0; i < end; i++) {
+        printf("%2d", list[i]);
+    }
+    printf("\n");
+}
+
+void selection_sort(int list[], int n) {
+    int i, j, least, tmp;
+    for (i = 0; i < n - 1; i++) {
+        least = i;
+        for (j = i + 1; j < n; j++) {
+            if (list[j] < list[least]) {
+                least = j;
             }
         }
+        SWAP(list[i], list[least], tmp);
+        printStep(list, n, i + 1);
     }
 }
 
 void main() {
-    int data[N] = {69, 10, 30, 2, 16, 8, 31, 22};
-    int temp;
-
-    printf("정렬 전 : ");
-    for (int i = 0; i < N; i++) {
-        printf("%d ", data[i]);
-    }
-    printf("\n");
-
-    // 선택 정렬 알고리즘
-    SelectionSort(data, N);
-
-    printf("정렬 후 : ");
-    for (int i = 0; i < N; i++) {
-        printf("%d ", data[i]);
-    }
-    printf("\n");
+    int list[8] = {7, 4, 9, 6, 3, 8, 7, 5};
+    printArray(list, 8, "Original");
+    selection_sort(list, 8);
+    printArray(list, 8, "Selection");
 }
